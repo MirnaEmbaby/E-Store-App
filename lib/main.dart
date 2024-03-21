@@ -1,3 +1,4 @@
+import 'package:e_store/layout/layout.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(),
-        body: Container(),
+        body: const LayoutScreen(),
       ),
     );
   }
