@@ -41,7 +41,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       appBar: AppBar(
         actions: [
           defaultTextButton(
-            function: () => navigateAndFinish(context, const LoginScreen()),
+            function: () => navigateAndFinish(context, LoginScreen()),
             text: 'skip',
           ),
         ],
@@ -90,7 +90,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 const Spacer(),
                 FloatingActionButton(
                   onPressed: () => isLast
-                      ? navigateAndFinish(context, const LoginScreen())
+                      ? navigateAndFinish(context, LoginScreen())
                       : boardController.nextPage(
                           duration: const Duration(
                             milliseconds: 750,

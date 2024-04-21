@@ -40,7 +40,7 @@ Widget? defaultFormField({
       decoration: InputDecoration(
           labelText: label,
           prefixIcon: Icon(prefix),
-          suffixIcon: suffix != null
+          suffixIcon: hasSuffix
               ? IconButton(
                   onPressed: () => suffixPressed!(),
                   icon: Icon(suffix),
@@ -88,7 +88,7 @@ Widget defaultTextButton({
   required String? text,
 }) =>
     TextButton(
-      onPressed: (){
+      onPressed: () {
         function();
       },
       child: Text(
