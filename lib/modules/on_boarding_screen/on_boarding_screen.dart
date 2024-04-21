@@ -40,12 +40,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          TextButton(
-            onPressed: () {
-              navigateAndFinish(context, const LoginScreen());
-            },
-            child: const Text('Skip'),
-          )
+          defaultTextButton(
+            function: () => navigateAndFinish(context, const LoginScreen()),
+            text: 'skip',
+          ),
         ],
       ),
       body: Padding(
@@ -82,7 +80,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   count: boarding.length,
                   effect: const ExpandingDotsEffect(
                     dotColor: Colors.grey,
-                    activeDotColor: Colors.orange,
+                    activeDotColor: Colors.blue,
                     dotWidth: 10,
                     dotHeight: 10,
                     expansionFactor: 2,

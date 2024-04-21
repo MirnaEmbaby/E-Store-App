@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 ThemeData lightTheme = ThemeData(
-  colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink),
+  colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue),
   appBarTheme: const AppBarTheme(
     titleSpacing: 20.0,
     color: Colors.white,
@@ -24,12 +24,12 @@ ThemeData lightTheme = ThemeData(
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     backgroundColor: Colors.white,
-    selectedItemColor: Colors.orange,
+    selectedItemColor: Colors.blue,
     elevation: 10.0,
   ),
   scaffoldBackgroundColor: Colors.white,
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.blue,
     foregroundColor: Colors.white,
   ),
   textTheme: const TextTheme(
@@ -45,7 +45,7 @@ ThemeData lightTheme = ThemeData(
 
 ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: Colors.black,
-  colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange),
+  colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue),
   appBarTheme: const AppBarTheme(
     titleSpacing: 20.0,
     color: Colors.black,
@@ -67,11 +67,11 @@ ThemeData darkTheme = ThemeData(
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     backgroundColor: Colors.black,
-    selectedItemColor: Colors.orange,
+    selectedItemColor: Colors.blue,
     elevation: 10.0,
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.blue,
     foregroundColor: Colors.black,
   ),
   unselectedWidgetColor: Colors.grey,
