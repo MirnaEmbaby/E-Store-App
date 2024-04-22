@@ -39,8 +39,8 @@ class LoginScreen extends StatelessWidget {
                               .textTheme
                               .headlineMedium!
                               .copyWith(
-                            color: Colors.black,
-                          ),
+                                color: Colors.black,
+                              ),
                         ),
                         Text(
                           'Login now to browse our hot offers',
