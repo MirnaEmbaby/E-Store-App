@@ -22,11 +22,21 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
         'password': password,
       },
     ).then((value) {
-      debugPrint(value.data);
       emit(ShopLoginSuccessState());
     }).catchError((error) {
       debugPrint(error.toString());
       emit(ShopLoginErrorState(error.toString()));
     });
+  }
+
+  IconData suffix = Icons.visibility_outlined;
+  bool isPasswordShown = false;
+
+  void changeVisibility() {
+    isPasswordShown = !isPasswordShown;
+    suffix = isPasswordShown
+        ? Icons.visibility_outlined
+        : Icons.visibility_off_outlined;
+    emit(ShopChangePasswordVisibilityState());
   }
 }

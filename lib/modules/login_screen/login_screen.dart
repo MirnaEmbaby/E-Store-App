@@ -59,7 +59,6 @@ class LoginScreen extends StatelessWidget {
                             if (value.isEmpty) {
                               return 'Please, enter your email address';
                             }
-                            return null;
                           },
                           label: 'Email address',
                           prefix: Icons.email_outlined,
@@ -75,13 +74,15 @@ class LoginScreen extends StatelessWidget {
                             if (value.isEmpty) {
                               return 'Password is too short';
                             }
-                            return null;
                           },
                           label: 'Password',
                           prefix: Icons.lock_outline,
                           hasSuffix: true,
-                          suffix: Icons.visibility_outlined,
-                          suffixPressed: () {},
+                          isPassword: ShopLoginCubit.get(context).isPasswordShown,
+                          suffix: ShopLoginCubit.get(context).suffix,
+                          suffixPressed: () {
+                            ShopLoginCubit.get(context).changeVisibility();
+                          },
                         )!,
                         const SizedBox(
                           height: 30.0,
