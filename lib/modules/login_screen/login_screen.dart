@@ -39,8 +39,8 @@ class LoginScreen extends StatelessWidget {
                               .textTheme
                               .headlineMedium!
                               .copyWith(
-                                color: Colors.black,
-                              ),
+                            color: Colors.black,
+                          ),
                         ),
                         Text(
                           'Login now to browse our hot offers',
@@ -55,10 +55,11 @@ class LoginScreen extends StatelessWidget {
                         defaultFormField(
                           controller: emailController,
                           type: TextInputType.emailAddress,
-                          validate: (String? value) {
-                            if (value!.isEmpty) {
+                          validate: (String value) {
+                            if (value.isEmpty) {
                               return 'Please, enter your email address';
                             }
+                            return null;
                           },
                           label: 'Email address',
                           prefix: Icons.email_outlined,
@@ -70,10 +71,11 @@ class LoginScreen extends StatelessWidget {
                         defaultFormField(
                           controller: passwordController,
                           type: TextInputType.visiblePassword,
-                          validate: (String? value) {
-                            if (value!.isEmpty) {
+                          validate: (String value) {
+                            if (value.isEmpty) {
                               return 'Password is too short';
                             }
+                            return null;
                           },
                           label: 'Password',
                           prefix: Icons.lock_outline,

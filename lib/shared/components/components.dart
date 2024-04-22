@@ -33,9 +33,9 @@ Widget? defaultFormField({
       keyboardType: type,
       obscureText: isPassword,
       enabled: isClickable,
-      onFieldSubmitted: (s) => onSubmit!(s),
-      onChanged: (s) => onChanged!(s),
-      onTap: () => onTap!(),
+      onFieldSubmitted: onSubmit != null ? (s) => onSubmit(s) : null,
+      onChanged: onChanged != null ? (s) => onChanged(s) : null,
+      onTap: onTap != null ? () => onTap() : null,
       validator: (s) => validate(s),
       decoration: InputDecoration(
           labelText: label,
@@ -73,7 +73,9 @@ Widget defaultButton({
         color: background,
       ),
       child: MaterialButton(
-        onPressed: () => function,
+        onPressed: () {
+          function!();
+        },
         child: Text(
           isUpperCase ? text!.toUpperCase() : text!,
           style: const TextStyle(
