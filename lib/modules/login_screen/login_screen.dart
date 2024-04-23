@@ -5,6 +5,7 @@ import 'package:e_store/modules/shop_register_screen/shop_register_screen.dart';
 import 'package:e_store/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
@@ -20,7 +21,34 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit, ShopLoginStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is ShopLoginSuccessState) {
+            if (state.loginModel.status) {
+              debugPrint(state.loginModel.message);
+              debugPrint(state.loginModel.data?.token);
+
+              Fluttertoast.showToast(
+                  msg: state.loginModel.message,
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            } else {
+              debugPrint(state.loginModel.message);
+
+              Fluttertoast.showToast(
+                  msg: state.loginModel.message,
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(),
@@ -78,7 +106,8 @@ class LoginScreen extends StatelessWidget {
                           label: 'Password',
                           prefix: Icons.lock_outline,
                           hasSuffix: true,
-                          isPassword: ShopLoginCubit.get(context).isPasswordShown,
+                          isPassword:
+                              ShopLoginCubit.get(context).isPasswordShown,
                           suffix: ShopLoginCubit.get(context).suffix,
                           suffixPressed: () {
                             ShopLoginCubit.get(context).changeVisibility();
@@ -97,6 +126,7 @@ class LoginScreen extends StatelessWidget {
                                   password: passwordController.text,
                                 );
                               }
+                              FocusScope.of(context).unfocus();
                             },
                             text: 'Login',
                             isUpperCase: true,

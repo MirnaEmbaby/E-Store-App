@@ -1,3 +1,4 @@
+import 'package:e_store/models/login_model.dart';
 import 'package:e_store/modules/login_screen/cubit/states.dart';
 import 'package:e_store/shared/network/end_points.dart';
 import 'package:e_store/shared/network/remote/dio_helper.dart';
@@ -8,6 +9,7 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
   ShopLoginCubit() : super(ShopLoginInitialState());
 
   static ShopLoginCubit get(context) => BlocProvider.of(context);
+  late LoginModel loginModel;
 
   void userLogin({
     required String email,
@@ -22,14 +24,15 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
         'password': password,
       },
     ).then((value) {
-      emit(ShopLoginSuccessState());
+      loginModel = LoginModel.fromJson(value.data);
+      emit(ShopLoginSuccessState(loginModel));
     }).catchError((error) {
       debugPrint(error.toString());
       emit(ShopLoginErrorState(error.toString()));
     });
   }
 
-  IconData suffix = Icons.visibility_outlined;
+  IconData suffix = Icons.visibility_off_outlined;
   bool isPasswordShown = false;
 
   void changeVisibility() {
