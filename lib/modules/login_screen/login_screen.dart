@@ -1,11 +1,12 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:e_store/modules/login_screen/cubit/cubit.dart';
 import 'package:e_store/modules/login_screen/cubit/states.dart';
+import 'package:e_store/modules/shop_layout/layout_screen.dart';
 import 'package:e_store/modules/shop_register_screen/shop_register_screen.dart';
 import 'package:e_store/shared/components/components.dart';
+import 'package:e_store/shared/network/local/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
@@ -27,25 +28,19 @@ class LoginScreen extends StatelessWidget {
               debugPrint(state.loginModel.message);
               debugPrint(state.loginModel.data?.token);
 
-              Fluttertoast.showToast(
-                  msg: state.loginModel.message,
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              CacheHelper.saveData(
+                      key: 'token', value: state.loginModel.data?.token)
+                  .then((value) => navigateAndFinish(
+                        context,
+                        const LayoutScreen(),
+                      ));
             } else {
               debugPrint(state.loginModel.message);
 
-              Fluttertoast.showToast(
-                  msg: state.loginModel.message,
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              showToast(
+                state.loginModel.message,
+                ToastStates.error,
+              );
             }
           }
         },
