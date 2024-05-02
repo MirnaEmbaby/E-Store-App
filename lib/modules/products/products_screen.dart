@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:e_store/models/categories_model.dart';
 import 'package:e_store/models/home_model.dart';
 import 'package:e_store/modules/shop_layout/cubit/cubit.dart';
 import 'package:e_store/modules/shop_layout/cubit/states.dart';
@@ -15,9 +16,13 @@ class ProductsScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: ShopCubit.get(context).homeModel != null,
+          condition: ShopCubit.get(context).homeModel != null &&
+              ShopCubit.get(context).categoriesModel != null,
           builder: (context) {
-            return builderWidget(ShopCubit.get(context).homeModel!);
+            return builderWidget(
+              ShopCubit.get(context).homeModel!,
+              ShopCubit.get(context).categoriesModel!,
+            );
           },
           fallback: (context) {
             return const Center(
@@ -30,9 +35,11 @@ class ProductsScreen extends StatelessWidget {
   }
 }
 
-Widget builderWidget(HomeModel model) => SingleChildScrollView(
+Widget builderWidget(HomeModel model, CategoriesModel categoriesModel) =>
+    SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CarouselSlider(
             items: model.data.banners
@@ -53,6 +60,50 @@ Widget builderWidget(HomeModel model) => SingleChildScrollView(
               reverse: false,
               scrollDirection: Axis.horizontal,
               viewportFraction: 1.0,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Categories',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 100.0,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) =>
+                        buildCategoryItem(categoriesModel.data.data[index]),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 10.0),
+                    itemCount: categoriesModel.data.data.length,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'New Products',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(
@@ -156,4 +207,31 @@ Widget buildGridItem(ProductModel model) => Container(
           ),
         ],
       ),
+    );
+
+Widget buildCategoryItem(DataModel model) => Stack(
+      alignment: AlignmentDirectional.bottomCenter,
+      children: [
+        Image(
+          image: NetworkImage(model.image!),
+          height: 100.0,
+          width: 100.0,
+          fit: BoxFit.cover,
+        ),
+        Container(
+          color: Colors.black.withOpacity(
+            0.8,
+          ),
+          width: 100.0,
+          child: Text(
+            model.name!,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
     );

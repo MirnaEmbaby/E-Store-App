@@ -1,3 +1,4 @@
+import 'package:e_store/models/categories_model.dart';
 import 'package:e_store/models/home_model.dart';
 import 'package:e_store/modules/categories/categories_screen.dart';
 import 'package:e_store/modules/favourites/favourites_screen.dart';
@@ -48,6 +49,25 @@ class ShopCubit extends Cubit<ShopStates> {
       (error) {
         debugPrint(error.toString());
         emit(ShopHomeDataErrorState());
+      },
+    );
+  }
+
+  CategoriesModel? categoriesModel;
+
+  void getCategories() {
+    DioHelper.getData(
+      url: get_categories,
+      token: token,
+    ).then(
+      (value) {
+        categoriesModel = CategoriesModel.fromJson(value.data);
+        emit(ShopCategoriesSuccessState());
+      },
+    ).catchError(
+      (error) {
+        debugPrint(error.toString());
+        emit(ShopCategoriesErrorState());
       },
     );
   }
