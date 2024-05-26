@@ -89,7 +89,7 @@ Widget buildFavItem(FavoritesData model, context) => SizedBox(
                       const SizedBox(
                         width: 5.0,
                       ),
-                      if (1 != 0)
+                      if (model.product.discount != 0)
                         Text(
                           model.product.oldPrice.toString(),
                           style: const TextStyle(

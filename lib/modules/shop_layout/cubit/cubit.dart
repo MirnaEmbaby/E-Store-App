@@ -84,7 +84,7 @@ class ShopCubit extends Cubit<ShopStates> {
     );
   }
 
-  late ChangeFavsModel changeFavsModel;
+  ChangeFavsModel? changeFavsModel;
 
   void changeFavs(int productId) {
     favourites[productId] = !favourites[productId]!;
@@ -92,21 +92,22 @@ class ShopCubit extends Cubit<ShopStates> {
 
     DioHelper.postData(
       url: favorites,
-      token: token,
       data: {'product_id': productId},
+      token: token,
     ).then((value) {
       changeFavsModel = ChangeFavsModel.fromJson(value.data);
-      debugPrint(value.data);
+      debugPrint(value.data.toString());
 
-      if (!changeFavsModel.status!) {
+      if (!changeFavsModel!.status!) {
         favourites[productId] = !favourites[productId]!;
       } else {
         getFavorites();
       }
 
-      debugPrint(changeFavsModel.message);
-      emit(ShopChangeFavSuccessState(changeFavsModel));
+      debugPrint(changeFavsModel!.message);
+      emit(ShopChangeFavSuccessState(changeFavsModel!));
     }).catchError((error) {
+      debugPrint(error.toString());
       favourites[productId] = !favourites[productId]!;
       emit(ShopChangeFavErrorState());
     });
