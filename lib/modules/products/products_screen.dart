@@ -4,6 +4,7 @@ import 'package:e_store/models/categories_model.dart';
 import 'package:e_store/models/home_model.dart';
 import 'package:e_store/modules/shop_layout/cubit/cubit.dart';
 import 'package:e_store/modules/shop_layout/cubit/states.dart';
+import 'package:e_store/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,16 +14,20 @@ class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is ShopChangeFavSuccessState) {
+          if (!state.model.status!) {
+            showToast(state.model.message, ToastStates.error);
+          }
+        }
+      },
       builder: (context, state) {
         return ConditionalBuilder(
           condition: ShopCubit.get(context).homeModel != null &&
               ShopCubit.get(context).categoriesModel != null,
           builder: (context) {
-            return builderWidget(
-              ShopCubit.get(context).homeModel!,
-              ShopCubit.get(context).categoriesModel!,
-            );
+            return builderWidget(ShopCubit.get(context).homeModel!,
+                ShopCubit.get(context).categoriesModel!, context);
           },
           fallback: (context) {
             return const Center(
@@ -35,7 +40,8 @@ class ProductsScreen extends StatelessWidget {
   }
 }
 
-Widget builderWidget(HomeModel model, CategoriesModel categoriesModel) =>
+Widget builderWidget(
+        HomeModel model, CategoriesModel categoriesModel, context) =>
     SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -120,7 +126,7 @@ Widget builderWidget(HomeModel model, CategoriesModel categoriesModel) =>
               physics: const NeverScrollableScrollPhysics(),
               children: List.generate(
                 model.data.products.length,
-                (index) => buildGridItem(model.data.products[index]),
+                (index) => buildGridItem(model.data.products[index], context),
               ),
             ),
           ),
@@ -128,7 +134,7 @@ Widget builderWidget(HomeModel model, CategoriesModel categoriesModel) =>
       ),
     );
 
-Widget buildGridItem(ProductModel model) => Container(
+Widget buildGridItem(ProductModel model, context) => Container(
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,11 +199,21 @@ Widget buildGridItem(ProductModel model) => Container(
                       ),
                     const Spacer(),
                     IconButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        size: 14.0,
+                      onPressed: () {
+                        debugPrint(model.id.toString());
+                        ShopCubit.get(context).changeFavs(model.id);
+                      },
+                      icon: CircleAvatar(
+                        radius: 15.0,
+                        backgroundColor:
+                            ShopCubit.get(context).favourites[model.id]!
+                                ? Colors.blue
+                                : Colors.grey,
+                        child: const Icon(
+                          Icons.favorite_border,
+                          size: 14.0,
+                          color: Colors.white,
+                        ),
                       ),
                     )
                   ],

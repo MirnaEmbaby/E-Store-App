@@ -3,3 +3,4 @@
 const login = 'login';
 const home = 'home';
 const get_categories = 'categories';
+const favorites = 'favorites';

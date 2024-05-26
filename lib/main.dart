@@ -22,6 +22,7 @@ void main() async {
   Widget widget;
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
   token = CacheHelper.getData(key: 'token');
+  debugPrint(token);
 
   if (onBoarding != null) {
     // ignore: unnecessary_null_comparison
@@ -57,7 +58,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => ShopCubit()
               ..getHomeData()
-              ..getCategories()),
+              ..getCategories()
+              ..getFavorites()),
       ],
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
