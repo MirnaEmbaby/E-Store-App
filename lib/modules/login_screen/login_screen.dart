@@ -4,6 +4,7 @@ import 'package:e_store/modules/login_screen/cubit/states.dart';
 import 'package:e_store/modules/shop_layout/layout_screen.dart';
 import 'package:e_store/modules/shop_register_screen/shop_register_screen.dart';
 import 'package:e_store/shared/components/components.dart';
+import 'package:e_store/shared/components/constants.dart';
 import 'package:e_store/shared/network/local/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,29 +12,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
 
   LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var emailController = TextEditingController();
-    var passwordController = TextEditingController();
-
     return BlocProvider(
       create: (context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit, ShopLoginStates>(
         listener: (context, state) {
           if (state is ShopLoginSuccessState) {
-            if (state.loginModel.status) {
+            if (state.loginModel.status!) {
               debugPrint(state.loginModel.message);
               debugPrint(state.loginModel.data?.token);
 
               CacheHelper.saveData(
                       key: 'token', value: state.loginModel.data?.token)
-                  .then((value) => navigateAndFinish(
-                        context,
-                        const LayoutScreen(),
-                      ));
+                  .then((value) {
+                token = state.loginModel.data!.token!;
+                navigateAndFinish(context, const LayoutScreen());
+              });
             } else {
               debugPrint(state.loginModel.message);
 
@@ -141,7 +141,7 @@ class LoginScreen extends StatelessWidget {
                               function: () {
                                 navigateTo(
                                   context,
-                                  const ShopRegisterScreen(),
+                                  ShopRegisterScreen(),
                                 );
                               },
                               text: 'Register now',
