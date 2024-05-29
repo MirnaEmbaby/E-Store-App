@@ -20,15 +20,9 @@ class SettingsScreen extends StatelessWidget {
       builder: (context, state) {
         var model = ShopCubit.get(context).userModel;
 
-        if (model?.data != null) {
-          nameController.text = model!.data!.name ?? '';
-          emailController.text = model.data!.email ?? '';
-          phoneController.text = model.data!.phone ?? '';
-        } else {
-          nameController.text = '';
-          emailController.text = '';
-          phoneController.text = '';
-        }
+        nameController.text = model!.data!.name!;
+        emailController.text = model.data!.email!;
+        phoneController.text = model.data!.phone!;
 
         return ConditionalBuilder(
           condition: ShopCubit.get(context).userModel != null,
