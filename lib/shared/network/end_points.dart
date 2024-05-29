@@ -6,3 +6,4 @@ const get_categories = 'categories';
 const favorites = 'favorites';
 const profile = 'profile';
 const register = 'register';
+const updateProfile = 'update-profile';

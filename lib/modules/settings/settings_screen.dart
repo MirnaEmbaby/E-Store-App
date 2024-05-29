@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({super.key});
 
+  var formKey = GlobalKey<FormState>();
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
@@ -29,63 +30,86 @@ class SettingsScreen extends StatelessWidget {
           builder: (context) {
             return Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  defaultFormField(
-                    controller: nameController,
-                    type: TextInputType.text,
-                    validate: (String value) {
-                      if (value.isEmpty) {
-                        return 'name must not be empty';
-                      }
-                      return null;
-                    },
-                    label: 'Name',
-                    prefix: Icons.person,
-                    hasSuffix: false,
-                  )!,
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  defaultFormField(
-                    controller: emailController,
-                    type: TextInputType.emailAddress,
-                    validate: (String value) {
-                      if (value.isEmpty) {
-                        return 'email must not be empty';
-                      }
-                      return null;
-                    },
-                    label: 'Email',
-                    prefix: Icons.email,
-                    hasSuffix: false,
-                  )!,
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  defaultFormField(
-                    controller: phoneController,
-                    type: TextInputType.phone,
-                    validate: (String value) {
-                      if (value.isEmpty) {
-                        return 'phone must not be empty';
-                      }
-                      return null;
-                    },
-                    label: 'Phone',
-                    prefix: Icons.phone,
-                    hasSuffix: false,
-                  )!,
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  defaultButton(
-                    function: () {
-                      signOut(context);
-                    },
-                    text: 'Logout',
-                  ),
-                ],
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    if (state is ShopUpdateUserDataLoadingState)
+                      const LinearProgressIndicator(),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    defaultFormField(
+                      controller: nameController,
+                      type: TextInputType.text,
+                      validate: (String value) {
+                        if (value.isEmpty) {
+                          return 'name must not be empty';
+                        }
+                        return null;
+                      },
+                      label: 'Name',
+                      prefix: Icons.person,
+                      hasSuffix: false,
+                    )!,
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    defaultFormField(
+                      controller: emailController,
+                      type: TextInputType.emailAddress,
+                      validate: (String value) {
+                        if (value.isEmpty) {
+                          return 'email must not be empty';
+                        }
+                        return null;
+                      },
+                      label: 'Email',
+                      prefix: Icons.email,
+                      hasSuffix: false,
+                    )!,
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    defaultFormField(
+                      controller: phoneController,
+                      type: TextInputType.phone,
+                      validate: (String value) {
+                        if (value.isEmpty) {
+                          return 'phone must not be empty';
+                        }
+                        return null;
+                      },
+                      label: 'Phone',
+                      prefix: Icons.phone,
+                      hasSuffix: false,
+                    )!,
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    defaultButton(
+                      function: () {
+                        if (formKey.currentState!.validate()) {
+                          ShopCubit.get(context).updateUserData(
+                            name: nameController.text,
+                            email: emailController.text,
+                            phone: phoneController.text,
+                          );
+                        }
+                      },
+                      text: 'Update',
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    defaultButton(
+                      function: () {
+                        signOut(context);
+                      },
+                      text: 'Logout',
+                    ),
+                  ],
+                ),
               ),
             );
           },
