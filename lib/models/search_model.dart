@@ -1,9 +1,9 @@
-class FavoritesModel {
+class SearchModel {
   bool? status;
   String? message;
   late Data data;
 
-  FavoritesModel.fromJson(Map<String, dynamic> json) {
+  SearchModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     data = Data.fromJson(json['data']);
@@ -12,7 +12,7 @@ class FavoritesModel {
 
 class Data {
   int? currentPage;
-  late List<FavoritesData> data = [];
+  late List<Product> data = [];
   String? firstPageUrl;
   int? from;
   int? lastPage;
@@ -27,7 +27,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
     json['data'].forEach((v) {
-      data.add(FavoritesData.fromJson(v));
+      data.add(Product.fromJson(v));
     });
 
     firstPageUrl = json['first_page_url'];
@@ -43,20 +43,9 @@ class Data {
   }
 }
 
-class FavoritesData {
-  late int id;
-  late Product product;
-
-  FavoritesData.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    product = Product.fromJson(json['product']);
-  }
-}
-
 class Product {
   late int id;
   dynamic price;
-  dynamic oldPrice;
   int? discount;
   String? image;
   String? name;
@@ -65,7 +54,6 @@ class Product {
   Product(
       {required this.id,
       this.price,
-      this.oldPrice,
       this.discount,
       this.image,
       this.name,
@@ -74,7 +62,6 @@ class Product {
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     price = json['price'];
-    oldPrice = json['old_price'];
     discount = json['discount'];
     image = json['image'];
     name = json['name'];
