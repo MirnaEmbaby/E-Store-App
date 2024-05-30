@@ -1,6 +1,7 @@
 import 'package:e_store/modules/login_screen/login_screen.dart';
 import 'package:e_store/modules/shop_layout/cubit/cubit.dart';
 import 'package:e_store/shared/network/local/cache_helper.dart';
+import 'package:e_store/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -61,7 +62,6 @@ Widget? defaultFormField({
 
 Widget defaultButton({
   double width = double.infinity,
-  Color background = Colors.blue,
   bool isUpperCase = true,
   double radius = 3.0,
   required Function? function,
@@ -74,7 +74,7 @@ Widget defaultButton({
         borderRadius: BorderRadius.circular(
           radius,
         ),
-        color: background,
+        color: defaultTeal,
       ),
       child: MaterialButton(
         onPressed: () {
@@ -92,6 +92,7 @@ Widget defaultButton({
 Widget defaultTextButton({
   required Function function,
   required String? text,
+  Color? color,
 }) =>
     TextButton(
       onPressed: () {
@@ -99,6 +100,7 @@ Widget defaultTextButton({
       },
       child: Text(
         text!.toUpperCase(),
+        style: TextStyle(color: color),
       ),
     );
 

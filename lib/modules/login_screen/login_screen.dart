@@ -6,6 +6,7 @@ import 'package:e_store/modules/shop_register_screen/shop_register_screen.dart';
 import 'package:e_store/shared/components/components.dart';
 import 'package:e_store/shared/components/constants.dart';
 import 'package:e_store/shared/network/local/cache_helper.dart';
+import 'package:e_store/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,6 +57,16 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Center(
+                          child: Icon(
+                            Icons.shopping_cart,
+                            color: defaultTeal,
+                            size: 120,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 50.0,
+                        ),
                         Text(
                           'LOGIN',
                           style: Theme.of(context)
@@ -65,8 +76,11 @@ class LoginScreen extends StatelessWidget {
                                 color: Colors.black,
                               ),
                         ),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
                         Text(
-                          'Login now to browse our hot offers',
+                          'What are you waiting for? Login now!',
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -147,6 +161,9 @@ class LoginScreen extends StatelessWidget {
                               text: 'Register now',
                             )
                           ],
+                        ),
+                        const SizedBox(
+                          height: 70.0,
                         ),
                       ],
                     ),

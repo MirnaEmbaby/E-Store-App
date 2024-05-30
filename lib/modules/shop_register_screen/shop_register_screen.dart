@@ -5,6 +5,7 @@ import 'package:e_store/modules/shop_register_screen/cubit/states.dart';
 import 'package:e_store/shared/components/components.dart';
 import 'package:e_store/shared/components/constants.dart';
 import 'package:e_store/shared/network/local/cache_helper.dart';
+import 'package:e_store/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,6 +58,16 @@ class ShopRegisterScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Center(
+                          child: Icon(
+                            Icons.shopping_cart,
+                            color: defaultTeal,
+                            size: 80,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 30.0,
+                        ),
                         Text(
                           'REGISTER',
                           style: Theme.of(context)
@@ -162,6 +173,9 @@ class ShopRegisterScreen extends StatelessWidget {
                           fallback: (context) => const Center(
                             child: CircularProgressIndicator(),
                           ),
+                        ),
+                        const SizedBox(
+                          height: 50,
                         ),
                       ],
                     ),

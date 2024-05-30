@@ -1,35 +1,36 @@
+import 'package:e_store/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 ThemeData lightTheme = ThemeData(
-    colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue),
-    appBarTheme: const AppBarTheme(
+    colorScheme: ColorScheme.fromSwatch(primarySwatch: defaultTealMaterial),
+    appBarTheme: AppBarTheme(
       titleSpacing: 20.0,
       color: Colors.white,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.white,
+        statusBarColor: Colors.white.withOpacity(0),
       ),
       surfaceTintColor: Colors.white,
       elevation: 0.0,
-      titleTextStyle: TextStyle(
+      titleTextStyle: const TextStyle(
         color: Colors.black,
         fontSize: 24.0,
         fontWeight: FontWeight.bold,
       ),
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: Colors.black,
       ),
     ),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.white,
-      selectedItemColor: Colors.blue,
+      selectedItemColor: defaultTeal,
       elevation: 10.0,
     ),
     scaffoldBackgroundColor: Colors.white,
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Colors.blue,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: defaultTeal,
       foregroundColor: Colors.white,
     ),
     textTheme: const TextTheme(
@@ -43,33 +44,33 @@ ThemeData lightTheme = ThemeData(
 
 ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: Colors.black,
-  colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue),
-  appBarTheme: const AppBarTheme(
+  colorScheme: ColorScheme.fromSwatch(primarySwatch: defaultTealMaterial),
+  appBarTheme: AppBarTheme(
     titleSpacing: 20.0,
     color: Colors.black,
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.light,
-      statusBarColor: Colors.black,
+      statusBarColor: Colors.black.withOpacity(0),
     ),
     surfaceTintColor: Colors.black,
     elevation: 0.0,
-    titleTextStyle: TextStyle(
+    titleTextStyle: const TextStyle(
       color: Colors.white,
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
     ),
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: Colors.white,
     ),
   ),
-  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     backgroundColor: Colors.black,
-    selectedItemColor: Colors.blue,
+    selectedItemColor: defaultTeal,
     elevation: 10.0,
   ),
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: Colors.blue,
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: defaultTeal,
     foregroundColor: Colors.black,
   ),
   unselectedWidgetColor: Colors.grey,

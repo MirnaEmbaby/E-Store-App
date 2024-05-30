@@ -67,13 +67,15 @@ class MyApp extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            themeMode:
-                AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
-            home: startWidget,
-          );
+              debugShowCheckedModeBanner: false,
+              theme: lightTheme,
+              darkTheme: darkTheme,
+              themeMode: AppCubit.get(context).isDark
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
+              home: const LayoutScreen()
+              //startWidget,
+              );
         },
       ),
     );

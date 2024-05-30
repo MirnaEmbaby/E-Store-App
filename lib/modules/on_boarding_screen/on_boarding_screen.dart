@@ -2,6 +2,7 @@ import 'package:e_store/models/boarding_model.dart';
 import 'package:e_store/modules/login_screen/login_screen.dart';
 import 'package:e_store/shared/components/components.dart';
 import 'package:e_store/shared/network/local/cache_helper.dart';
+import 'package:e_store/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -20,19 +21,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   List<BoardingModel> boarding = [
     BoardingModel(
-      image: 'assets/images/onboard_1.jpg',
-      title: 'On Board Title 1',
-      body: 'On Board Body 1',
+      image: 'assets/images/order.png',
+      title: 'Order',
+      body: 'Browse our wide selection of products and services.',
     ),
     BoardingModel(
-      image: 'assets/images/onboard_1.jpg',
-      title: 'On Board Title 2',
-      body: 'On Board Body 2',
+      image: 'assets/images/pay.png',
+      title: 'Pay',
+      body:
+          'Select a convenient payment method and securely complete your purchase.',
     ),
     BoardingModel(
-      image: 'assets/images/onboard_1.jpg',
-      title: 'On Board Title 3',
-      body: 'On Board Body 3',
+      image: 'assets/images/delivery.png',
+      title: 'Delivery',
+      body: 'Choose a delivery time and location that works best for you.',
     ),
   ];
 
@@ -45,48 +47,51 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         actions: [
           defaultTextButton(
             function: () => submit(),
             text: 'skip',
+            color: Colors.black,
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                itemBuilder: (context, index) =>
-                    buildBoardingItem(boarding[index]),
-                itemCount: boarding.length,
-                controller: boardController,
-                physics: const BouncingScrollPhysics(),
-                onPageChanged: (int index) {
-                  if (index == boarding.length - 1) {
-                    setState(() {
-                      isLast = true;
-                    });
-                  } else {
-                    setState(() {
-                      isLast = false;
-                    });
-                  }
-                },
-              ),
+      extendBodyBehindAppBar: true,
+      body: Column(
+        children: [
+          Expanded(
+            child: PageView.builder(
+              itemBuilder: (context, index) =>
+                  buildBoardingItem(boarding[index]),
+              itemCount: boarding.length,
+              controller: boardController,
+              physics: const BouncingScrollPhysics(),
+              onPageChanged: (int index) {
+                if (index == boarding.length - 1) {
+                  setState(() {
+                    isLast = true;
+                  });
+                } else {
+                  setState(() {
+                    isLast = false;
+                  });
+                }
+              },
             ),
-            const SizedBox(
-              height: 40,
-            ),
-            Row(
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Row(
               children: [
                 SmoothPageIndicator(
                   controller: boardController,
                   count: boarding.length,
-                  effect: const ExpandingDotsEffect(
+                  effect: ExpandingDotsEffect(
                     dotColor: Colors.grey,
-                    activeDotColor: Colors.blue,
+                    activeDotColor: defaultTeal,
                     dotWidth: 10,
                     dotHeight: 10,
                     expansionFactor: 2,
@@ -109,8 +114,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 )
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -121,28 +126,35 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           Expanded(
             child: Image(
               image: AssetImage(model.image),
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
           ),
-          const SizedBox(
-            height: 30.0,
-          ),
-          Text(
-            model.title,
-            style: const TextStyle(
-              fontSize: 24.0,
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  model.title,
+                  style: const TextStyle(
+                    fontSize: 36.0,
+                  ),
+                ),
+                const SizedBox(
+                  height: 15.0,
+                ),
+                Text(
+                  model.body,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: 15.0,
-          ),
-          Text(
-            model.body,
-            style: const TextStyle(
-              fontSize: 14.0,
-            ),
-          ),
-          const SizedBox(
-            height: 30.0,
           ),
         ],
       );

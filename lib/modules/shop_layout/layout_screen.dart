@@ -2,6 +2,7 @@ import 'package:e_store/modules/search/search_screen.dart';
 import 'package:e_store/modules/shop_layout/cubit/cubit.dart';
 import 'package:e_store/modules/shop_layout/cubit/states.dart';
 import 'package:e_store/shared/components/components.dart';
+import 'package:e_store/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,11 +17,26 @@ class LayoutScreen extends StatelessWidget {
         var cubit = ShopCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Salla'),
+            leading: Icon(
+              Icons.shopping_cart,
+              color: defaultTeal,
+              size: 36.0,
+            ),
+            title: Text(
+              'Prime Picks',
+              style: TextStyle(
+                color: defaultTeal,
+                fontSize: 26,
+              ),
+            ),
             actions: [
               IconButton(
                 onPressed: () => navigateTo(context, const SearchScreen()),
-                icon: const Icon(Icons.search),
+                icon: Icon(
+                  Icons.search,
+                  color: defaultTeal,
+                  size: 26.0,
+                ),
               )
             ],
           ),
