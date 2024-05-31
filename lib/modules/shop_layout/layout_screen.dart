@@ -27,6 +27,7 @@ class LayoutScreen extends StatelessWidget {
               style: TextStyle(
                 color: defaultTeal,
                 fontSize: 26,
+                fontWeight: FontWeight.bold,
               ),
             ),
             actions: [
@@ -39,7 +40,9 @@ class LayoutScreen extends StatelessWidget {
                 ),
               )
             ],
+            elevation: 20.0,
           ),
+          backgroundColor: const Color(0xFFF5F5F5),
           body: cubit.bottomScreens[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
             onTap: (index) => cubit.changeBottomNav(index),

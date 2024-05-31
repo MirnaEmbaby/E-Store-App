@@ -12,11 +12,14 @@ class CategoriesScreen extends StatelessWidget {
     return BlocConsumer<ShopCubit, ShopStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        return ListView.separated(
-          itemBuilder: (context, index) => buildCatItem(
-              ShopCubit.get(context).categoriesModel!.data.data[index]),
-          separatorBuilder: (context, index) => const Divider(),
-          itemCount: ShopCubit.get(context).categoriesModel!.data.data.length,
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: ListView.separated(
+            itemBuilder: (context, index) => buildCatItem(
+                ShopCubit.get(context).categoriesModel!.data.data[index]),
+            separatorBuilder: (context, index) => const Divider(),
+            itemCount: ShopCubit.get(context).categoriesModel!.data.data.length,
+          ),
         );
       },
     );

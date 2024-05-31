@@ -44,16 +44,22 @@ Widget? defaultFormField({
       validator: (s) => validate(s),
       decoration: InputDecoration(
           labelText: label,
-          prefixIcon: Icon(prefix),
+          prefixIcon: Icon(
+            prefix,
+            color: defaultTeal,
+          ),
           suffixIcon: hasSuffix
               ? IconButton(
                   onPressed: () => suffixPressed!(),
-                  icon: Icon(suffix),
+                  icon: Icon(
+                    suffix,
+                    color: defaultTeal,
+                  ),
                 )
               : null,
-          focusedBorder: const OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.blue,
+              color: defaultTeal,
               width: 2.0,
             ),
           ),
@@ -140,97 +146,105 @@ void signOut(context) {
   );
 }
 
-Widget buildListItem(model, context, {bool isOldPrice = true}) => SizedBox(
-      height: 130,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              alignment: AlignmentDirectional.bottomStart,
-              children: [
-                Image(
-                  image: NetworkImage(model.image!),
-                  width: 120,
-                  height: 120,
-                ),
-                if (model.discount != 0 && isOldPrice)
-                  Container(
-                    color: Colors.red,
-                    padding: const EdgeInsets.all(5.0),
-                    child: const Text(
-                      'DISCOUNT',
-                      style: TextStyle(
-                        fontSize: 8.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+Widget buildListItem(model, context, {bool isOldPrice = true}) => Card(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16.0),
+        child: Container(
+          height: 130,
+          color: Colors.white,
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                alignment: AlignmentDirectional.bottomStart,
                 children: [
-                  Text(
-                    model.name!,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                      height: 1.3,
+                  Image(
+                    image: NetworkImage(model.image!),
+                    width: 120,
+                    height: 120,
+                  ),
+                  if (model.discount != 0 && isOldPrice)
+                    Container(
+                      color: Colors.red,
+                      padding: const EdgeInsets.all(5.0),
+                      child: const Text(
+                        'DISCOUNT',
+                        style: TextStyle(
+                          fontSize: 8.0,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      Text(
-                        model.price.toString(),
-                        style: const TextStyle(
-                          fontSize: 12.0,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5.0,
-                      ),
-                      if (model.discount != 0 && isOldPrice)
-                        Text(
-                          model.oldPrice.toString(),
-                          style: const TextStyle(
-                            fontSize: 12.0,
-                            color: Colors.grey,
-                            decoration: TextDecoration.lineThrough,
-                          ),
-                        ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          ShopCubit.get(context).changeFavs(model.id!);
-                        },
-                        icon: CircleAvatar(
-                          radius: 15.0,
-                          backgroundColor:
-                              ShopCubit.get(context).favourites[model.id]!
-                                  ? Colors.blue
-                                  : Colors.grey,
-                          child: const Icon(
-                            Icons.favorite_border,
-                            size: 14.0,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      model.name!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 14.0,
+                        height: 1.3,
+                      ),
+                    ),
+                    const Spacer(),
+                    if (model.discount != 0 && isOldPrice)
+                      Text(
+                        '${model.oldPrice} EGP',
+                        style: const TextStyle(
+                          fontSize: 12.0,
+                          color: Colors.grey,
+                          decoration: TextDecoration.lineThrough,
+                          height: 0.1,
+                        ),
+                      ),
+                    Row(
+                      children: [
+                        Text(
+                          '${model.price} EGP',
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: defaultTeal,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5.0,
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          onPressed: () {
+                            ShopCubit.get(context).changeFavs(model.id!);
+                          },
+                          icon: Icon(
+                            ShopCubit.get(context).favourites[model.id]!
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            size: 18.0,
+                            color: defaultTeal,
+                            shadows: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 10,
+                                blurRadius: 10,
+                                offset: Offset(1, 1),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

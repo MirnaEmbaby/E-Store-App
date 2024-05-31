@@ -5,6 +5,7 @@ import 'package:e_store/models/home_model.dart';
 import 'package:e_store/modules/shop_layout/cubit/cubit.dart';
 import 'package:e_store/modules/shop_layout/cubit/states.dart';
 import 'package:e_store/shared/components/components.dart';
+import 'package:e_store/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,209 +45,227 @@ Widget builderWidget(
         HomeModel model, CategoriesModel categoriesModel, context) =>
     SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CarouselSlider(
-            items: model.data.banners
-                .map((e) => Image(
-                      image: NetworkImage('${e.image}'),
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ))
-                .toList(),
-            options: CarouselOptions(
-              autoPlay: true,
-              autoPlayAnimationDuration: const Duration(seconds: 1),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              autoPlayInterval: const Duration(seconds: 3),
-              enableInfiniteScroll: true,
-              height: 250.0,
-              initialPage: 0,
-              reverse: false,
-              scrollDirection: Axis.horizontal,
-              viewportFraction: 1.0,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 10.0,
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Categories',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  height: 100.0,
-                  child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) =>
-                        buildCategoryItem(categoriesModel.data.data[index]),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 10.0),
-                    itemCount: categoriesModel.data.data.length,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  'New Products',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            color: Colors.grey[300],
-            child: GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              childAspectRatio: 1 / 1.58,
-              crossAxisSpacing: 1.0,
-              mainAxisSpacing: 1.0,
-              physics: const NeverScrollableScrollPhysics(),
-              children: List.generate(
-                model.data.products.length,
-                (index) => buildGridItem(model.data.products[index], context),
+            SizedBox(
+              height: 130.0,
+              child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemBuilder: (context, index) =>
+                    buildCategoryItem(categoriesModel.data.data[index]),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(width: 10.0),
+                itemCount: categoriesModel.data.data.length,
               ),
             ),
-          ),
-        ],
+            CarouselSlider(
+              items: model.data.banners
+                  .map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Image(
+                          image: NetworkImage('${e.image}'),
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+              options: CarouselOptions(
+                autoPlay: true,
+                autoPlayAnimationDuration: const Duration(seconds: 1),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                autoPlayInterval: const Duration(seconds: 3),
+                enableInfiniteScroll: true,
+                height: 250.0,
+                initialPage: 0,
+                reverse: false,
+                scrollDirection: Axis.horizontal,
+                viewportFraction: 1.0,
+              ),
+            ),
+            const Text(
+              'For You',
+              style: TextStyle(
+                fontSize: 28.0,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            buildProductsGrid(model, context),
+          ],
+        ),
       ),
     );
 
-Widget buildGridItem(ProductModel model, context) => Container(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            alignment: AlignmentDirectional.bottomStart,
+Widget buildProductsGrid(model, context) => GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      childAspectRatio: 1 / 1.58,
+      crossAxisSpacing: 4.0,
+      mainAxisSpacing: 4.0,
+      physics: const NeverScrollableScrollPhysics(),
+      children: List.generate(
+        model.data.products.length,
+        (index) => buildGridItem(model.data.products[index], context),
+      ),
+    );
+
+Widget buildGridItem(ProductModel model, context) => Card(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16.0),
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(
-                image: NetworkImage(
-                  model.image!,
-                ),
-                width: double.infinity,
-                height: 200.0,
-              ),
-              if (model.discount != 0)
-                Container(
-                  color: Colors.red,
-                  padding: const EdgeInsets.all(5.0),
-                  child: const Text(
-                    'DISCOUNT',
-                    style: TextStyle(
-                      fontSize: 8.0,
-                      color: Colors.white,
+              Stack(
+                alignment: AlignmentDirectional.bottomStart,
+                children: [
+                  Image(
+                    image: NetworkImage(
+                      model.image!,
                     ),
+                    width: double.infinity,
+                    height: 150.0,
                   ),
-                ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                Text(
-                  model.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 14.0,
-                    height: 1.3,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      '${model.price.round()}',
-                      style: const TextStyle(
-                        fontSize: 12.0,
-                        color: Colors.blue,
+                  if (model.discount != 0)
+                    Container(
+                      color: Colors.red,
+                      padding: const EdgeInsets.all(5.0),
+                      child: const Text(
+                        'DISCOUNT',
+                        style: TextStyle(
+                          fontSize: 8.0,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 5.0,
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.all(12.0),
+                height: 140,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      model.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 14.0,
+                        height: 1.3,
+                      ),
                     ),
+                    const Spacer(),
                     if (model.discount != 0)
                       Text(
-                        '${model.oldPrice.round()}',
+                        '${model.oldPrice.round()} EGP',
                         style: const TextStyle(
                           fontSize: 12.0,
                           color: Colors.grey,
                           decoration: TextDecoration.lineThrough,
+                          height: 0.1,
                         ),
                       ),
-                    const Spacer(),
-                    IconButton(
-                      onPressed: () {
-                        ShopCubit.get(context).changeFavs(model.id);
-                      },
-                      icon: CircleAvatar(
-                        radius: 15.0,
-                        backgroundColor:
+                    Row(
+                      children: [
+                        Text(
+                          '${model.price.round()} EGP',
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: defaultTeal,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5.0,
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          onPressed: () {
+                            ShopCubit.get(context).changeFavs(model.id);
+                          },
+                          icon: Icon(
                             ShopCubit.get(context).favourites[model.id]!
-                                ? Colors.blue
-                                : Colors.grey,
-                        child: const Icon(
-                          Icons.favorite_border,
-                          size: 14.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            size: 18.0,
+                            color: defaultTeal,
+                            shadows: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 10,
+                                blurRadius: 10,
+                                offset: Offset(1, 1),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
 
-Widget buildCategoryItem(DataModel model) => Stack(
-      alignment: AlignmentDirectional.bottomCenter,
-      children: [
-        Image(
-          image: NetworkImage(model.image!),
-          height: 100.0,
-          width: 100.0,
-          fit: BoxFit.cover,
-        ),
-        Container(
-          color: Colors.black.withOpacity(
-            0.8,
+Widget buildCategoryItem(DataModel model) => SizedBox(
+      width: 90.0,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 5.0,
           ),
-          width: 100.0,
-          child: Text(
-            model.name!,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: Colors.white,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  spreadRadius: 1,
+                  blurRadius: 3,
+                  offset: Offset(1, 1),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Image(
+                image: NetworkImage(model.image!),
+                height: 80.0,
+                width: 80.0,
+                fit: BoxFit.fitHeight,
+              ),
             ),
           ),
-        ),
-      ],
+          const SizedBox(
+            height: 10.0,
+          ),
+          Text(
+            model.name!,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            style: const TextStyle(color: Colors.black, height: 1.0),
+          ),
+        ],
+      ),
     );

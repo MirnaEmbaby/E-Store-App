@@ -18,6 +18,7 @@ class SearchScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(),
+            backgroundColor: const Color(0xFFF5F5F5),
             body: Form(
               key: formKey,
               child: Padding(
@@ -53,7 +54,9 @@ class SearchScreen extends StatelessWidget {
                               SearchCubit.get(context).model.data.data[index],
                               context,
                               isOldPrice: false),
-                          separatorBuilder: (context, index) => const Divider(),
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 10.0,
+                          ),
                           itemCount:
                               SearchCubit.get(context).model.data.data.length,
                         ),

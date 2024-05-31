@@ -6,13 +6,12 @@ ThemeData lightTheme = ThemeData(
     colorScheme: ColorScheme.fromSwatch(primarySwatch: defaultTealMaterial),
     appBarTheme: AppBarTheme(
       titleSpacing: 20.0,
-      color: Colors.white,
+      color: const Color(0xFFF5F5F5),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
         statusBarColor: Colors.white.withOpacity(0),
       ),
       surfaceTintColor: Colors.white,
-      elevation: 0.0,
       titleTextStyle: const TextStyle(
         color: Colors.black,
         fontSize: 24.0,
@@ -53,7 +52,6 @@ ThemeData darkTheme = ThemeData(
       statusBarColor: Colors.black.withOpacity(0),
     ),
     surfaceTintColor: Colors.black,
-    elevation: 0.0,
     titleTextStyle: const TextStyle(
       color: Colors.white,
       fontSize: 24.0,
