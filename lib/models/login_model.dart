@@ -25,7 +25,7 @@ class UserData {
     name = json['name'];
     email = json['email'];
     phone = json['phone'];
-    image = json['image'];
+    image = Uri.encodeFull(json['image']);
     points = json['points'];
     credit = json['credit'];
     token = json['token'];

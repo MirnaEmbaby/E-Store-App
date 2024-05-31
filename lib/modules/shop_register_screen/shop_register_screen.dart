@@ -27,9 +27,6 @@ class ShopRegisterScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is ShopRegisterSuccessState) {
             if (state.loginModel.status!) {
-              debugPrint(state.loginModel.message);
-              debugPrint(state.loginModel.data?.token);
-
               CacheHelper.saveData(
                       key: 'token', value: state.loginModel.data?.token)
                   .then((value) {
@@ -37,8 +34,6 @@ class ShopRegisterScreen extends StatelessWidget {
                 navigateAndFinish(context, const LayoutScreen());
               });
             } else {
-              debugPrint(state.loginModel.message);
-
               showToast(
                 state.loginModel.message,
                 ToastStates.error,

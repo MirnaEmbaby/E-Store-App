@@ -30,6 +30,6 @@ class DataModel {
   DataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    image = json['image'];
+    image = Uri.encodeFull(json['image']);
   }
 }

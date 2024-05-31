@@ -144,7 +144,7 @@ Widget buildGridItem(ProductModel model, context) => Container(
             children: [
               Image(
                 image: NetworkImage(
-                  model.image,
+                  model.image!,
                 ),
                 width: double.infinity,
                 height: 200.0,
@@ -200,7 +200,6 @@ Widget buildGridItem(ProductModel model, context) => Container(
                     const Spacer(),
                     IconButton(
                       onPressed: () {
-                        debugPrint(model.id.toString());
                         ShopCubit.get(context).changeFavs(model.id);
                       },
                       icon: CircleAvatar(

@@ -22,7 +22,6 @@ void main() async {
   Widget widget;
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
   token = CacheHelper.getData(key: 'token');
-  debugPrint(token);
 
   if (onBoarding != null) {
     // ignore: unnecessary_null_comparison

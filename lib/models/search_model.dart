@@ -63,7 +63,7 @@ class Product {
     id = json['id'];
     price = json['price'];
     discount = json['discount'];
-    image = json['image'];
+    image = Uri.encodeFull(json['image']);
     name = json['name'];
     description = json['description'];
   }

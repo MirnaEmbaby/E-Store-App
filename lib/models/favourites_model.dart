@@ -76,7 +76,7 @@ class Product {
     price = json['price'];
     oldPrice = json['old_price'];
     discount = json['discount'];
-    image = json['image'];
+    image = Uri.encodeFull(json['image']);
     name = json['name'];
     description = json['description'];
   }

@@ -8,7 +8,6 @@ import 'package:e_store/modules/favourites/favourites_screen.dart';
 import 'package:e_store/modules/products/products_screen.dart';
 import 'package:e_store/modules/settings/settings_screen.dart';
 import 'package:e_store/modules/shop_layout/cubit/states.dart';
-import 'package:e_store/shared/components/components.dart';
 import 'package:e_store/shared/components/constants.dart';
 import 'package:e_store/shared/network/end_points.dart';
 import 'package:e_store/shared/network/remote/dio_helper.dart';
@@ -53,14 +52,10 @@ class ShopCubit extends Cubit<ShopStates> {
           );
         }
 
-        debugPrint(favourites.toString());
-
         emit(ShopHomeDataSuccessState());
-        printFullText(homeModel!.data.banners[0].image);
       },
     ).catchError(
       (error) {
-        debugPrint(error.toString());
         emit(ShopHomeDataErrorState());
       },
     );
@@ -79,7 +74,6 @@ class ShopCubit extends Cubit<ShopStates> {
       },
     ).catchError(
       (error) {
-        debugPrint(error.toString());
         emit(ShopCategoriesErrorState());
       },
     );
@@ -97,7 +91,6 @@ class ShopCubit extends Cubit<ShopStates> {
       token: token,
     ).then((value) {
       changeFavsModel = ChangeFavsModel.fromJson(value.data);
-      debugPrint(value.data.toString());
 
       if (!changeFavsModel!.status!) {
         favourites[productId] = !favourites[productId]!;
@@ -105,10 +98,8 @@ class ShopCubit extends Cubit<ShopStates> {
         getFavorites();
       }
 
-      debugPrint(changeFavsModel!.message);
       emit(ShopChangeFavSuccessState(changeFavsModel!));
     }).catchError((error) {
-      debugPrint(error.toString());
       favourites[productId] = !favourites[productId]!;
       emit(ShopChangeFavErrorState());
     });
@@ -125,12 +116,10 @@ class ShopCubit extends Cubit<ShopStates> {
     ).then(
       (value) {
         favoritesModel = FavoritesModel.fromJson(value.data);
-        printFullText(value.data.toString());
         emit(ShopGetFavsSuccessState());
       },
     ).catchError(
       (error) {
-        debugPrint(error.toString());
         emit(ShopGetFavsErrorState());
       },
     );
@@ -146,11 +135,9 @@ class ShopCubit extends Cubit<ShopStates> {
       token: token,
     ).then((value) {
       userModel = LoginModel.fromJson(value.data);
-      printFullText(userModel!.data!.name);
 
       emit(ShopGetUserDataSuccessState(userModel));
     }).catchError((error) {
-      debugPrint(error.toString());
       emit(ShopGetUserDataErrorState());
     });
   }
@@ -172,11 +159,9 @@ class ShopCubit extends Cubit<ShopStates> {
       },
     ).then((value) {
       userModel = LoginModel.fromJson(value.data);
-      printFullText(userModel!.data!.name);
 
       emit(ShopGetUserDataSuccessState(userModel));
     }).catchError((error) {
-      debugPrint(error.toString());
       emit(ShopGetUserDataErrorState());
     });
   }

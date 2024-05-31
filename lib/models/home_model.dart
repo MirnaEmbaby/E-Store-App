@@ -31,7 +31,7 @@ class BannerModel {
 
   BannerModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    image = json['image'];
+    image = Uri.encodeFull(json['image']);
   }
 }
 
@@ -40,7 +40,7 @@ class ProductModel {
   late dynamic price;
   late dynamic oldPrice;
   late dynamic discount;
-  late String image;
+  String? image;
   late String name;
   late bool inFavourites;
   late bool inCart;
