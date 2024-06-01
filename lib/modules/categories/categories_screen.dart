@@ -17,7 +17,9 @@ class CategoriesScreen extends StatelessWidget {
           child: ListView.separated(
             itemBuilder: (context, index) => buildCatItem(
                 ShopCubit.get(context).categoriesModel!.data.data[index]),
-            separatorBuilder: (context, index) => const Divider(),
+            separatorBuilder: (context, index) => const Divider(
+              color: Colors.grey,
+            ),
             itemCount: ShopCubit.get(context).categoriesModel!.data.data.length,
           ),
         );
@@ -31,11 +33,27 @@ Widget buildCatItem(DataModel model) {
     padding: const EdgeInsets.all(8.0),
     child: Row(
       children: [
-        Image(
-          image: NetworkImage(model.image!),
-          width: 80.0,
-          height: 80.0,
-          fit: BoxFit.cover,
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                spreadRadius: 1,
+                blurRadius: 3,
+                offset: Offset(1, 1),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image(
+              image: NetworkImage(model.image!),
+              height: 80.0,
+              width: 80.0,
+              fit: BoxFit.fitHeight,
+            ),
+          ),
         ),
         const SizedBox(
           width: 20.0,
@@ -43,7 +61,7 @@ Widget buildCatItem(DataModel model) {
         Text(
           model.name!,
           style: const TextStyle(
-            fontSize: 20.0,
+            fontSize: 22.0,
             fontWeight: FontWeight.bold,
           ),
         ),

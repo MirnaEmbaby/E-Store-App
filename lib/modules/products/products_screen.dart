@@ -70,7 +70,7 @@ Widget builderWidget(
               items: model.data.banners
                   .map(
                     (e) => Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20.0),
                         child: Image(

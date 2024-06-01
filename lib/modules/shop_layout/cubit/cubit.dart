@@ -8,6 +8,7 @@ import 'package:e_store/modules/favourites/favourites_screen.dart';
 import 'package:e_store/modules/products/products_screen.dart';
 import 'package:e_store/modules/settings/settings_screen.dart';
 import 'package:e_store/modules/shop_layout/cubit/states.dart';
+import 'package:e_store/shared/components/components.dart';
 import 'package:e_store/shared/components/constants.dart';
 import 'package:e_store/shared/network/end_points.dart';
 import 'package:e_store/shared/network/remote/dio_helper.dart';
@@ -159,9 +160,11 @@ class ShopCubit extends Cubit<ShopStates> {
       },
     ).then((value) {
       userModel = LoginModel.fromJson(value.data);
+      showToast("Updated Successfully", ToastStates.success);
 
       emit(ShopGetUserDataSuccessState(userModel));
     }).catchError((error) {
+      showToast("An Error Occurred", ToastStates.error);
       emit(ShopGetUserDataErrorState());
     });
   }

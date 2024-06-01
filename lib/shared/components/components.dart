@@ -125,13 +125,13 @@ Color toastColor(ToastStates state) {
   Color color;
   switch (state) {
     case ToastStates.success:
-      color = Colors.green;
+      color = Colors.green.withOpacity(0.7);
       break;
     case ToastStates.error:
-      color = Colors.red;
+      color = Colors.red.withOpacity(0.7);
       break;
     case ToastStates.warning:
-      color = Colors.amber;
+      color = Colors.amber.withOpacity(0.7);
       break;
   }
   return color;
